@@ -1,0 +1,881 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cafe Delight - Уютное кафе</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            line-height: 1.6;
+            color: rgb(51,51,51);
+            background-color: rgb(241, 232, 205)
+        
+        }
+
+        /* Header */
+        header {
+            background: rgba(139, 69, 19, 0);
+            color: white;
+            padding: 1rem 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            transition: 0.5s ease-in-out;
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 2rem;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+        }
+
+        nav ul li {
+            margin-left: 2rem;
+        }
+
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        nav ul li a:hover {
+            color: #ffbb00;
+        }
+
+        #cart-items{
+            list-style: none;
+        }
+
+        .show-nav{
+            display: flex !important;
+            flex-direction: column;
+            text-align: center;
+        }
+
+        nav ul li {
+            margin-left: 2rem;
+        }
+
+        @media (max-width: 768px) {
+            nav ul li {
+                margin-left: 0 !important;
+            }
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('https://static.vecteezy.com/system/resources/previews/023/010/450/non_2x/the-cup-of-latte-coffee-with-heart-shaped-latte-art-and-ai-generated-free-photo.jpg');
+            background-size: cover;
+            background-position: center;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: white;
+        }
+
+        .hero-content h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .hero-content p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+        }
+
+        .btn {
+            display: inline-block;
+            background: rgb(255, 208, 0);
+            color: #333;
+            padding: 12px 30px;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: bold;
+            transition: all 0.3s;
+        }
+
+        .btn:hover {
+            background: #ffae00;
+        }
+
+        .delete-item {
+            margin-left: 8px;
+            background: #c0392b;
+            color: #fff;
+            padding: 6px 8px;
+            border-radius: 4px;
+            border: none;
+            cursor: pointer;
+            font-size: 0.9rem;
+        }
+
+        /* Sections */
+        section {
+            padding: 5rem 2rem;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        h2 {
+            text-align: center;
+            margin-bottom: 3rem;
+            font-size: 2.5rem;
+            color: #8B4513;
+        }
+
+        /* About */
+        .about-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            align-items: center;
+            
+        }
+
+        /* Menu */
+        .menu-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .menu-item {
+            background: #f9f9f9;
+            padding: 2rem;
+            border-radius: 10px;
+            text-align: center;
+            transition: transform 0.3s;
+        }
+
+        .menu-item:hover {
+            transform: translateY(-5px);
+        }
+
+        .menu-item h3 {
+            color: #ffffffb6;
+            margin-bottom: 1rem;
+            font-size: 5vh;
+            
+        }
+
+        .price {
+            font-size: 5vh;
+            font-weight: bold;
+            color: #b66b09;
+            margin-top: 2rem;
+            
+        }
+
+        #cuppuccino{
+            background-image: url('https://s.yimg.com/ny/api/res/1.2/MOiIQW3vuGe1GUKBk0MMPw--/YXBwaWQ9aGlnaGxhbmRlcjt3PTEyMDA7aD02NzU7Y2Y9d2VicA--/https://media.zenfs.com/en/chowhound_739/c89a3a4d797546e99da84970409e9434');
+            background-size: cover;
+        }
+
+        #espresso{
+            background-image: url('https://chillesta.ru/wp-content/uploads/2025/06/cup-coffee-with-word-latte-it.jpg');
+            background-size: cover;
+        }
+
+        #latte{
+            background-image: url('https://blog.coffeeok.com.ua/wp-content/uploads/2023/10/kofe_dlya_latte__kak_pravilno_vybrat_1.png');
+            background-size: cover;
+        }
+
+        #cruassan{
+            background-image: url('https://grandgames.net/puzzle/f1200/dva_kruassana_1.jpg');
+            background-size: cover;
+        }
+
+        #cheesecake{
+            background-image: url('https://santokuknives.co.uk/cdn/shop/articles/Cheesecake_200_300-710217.jpg?v=1716638859');
+            background-size: cover;
+        }
+
+        #sandwich{
+            background-image: url('https://avatars.mds.yandex.net/i?id=e88854af1b423fddaaf535065ec2566d_l-12472657-images-thumbs&n=13');
+            background-size: cover;
+        }
+
+        .menu-item p{
+            color: #ffffff;
+            font-size: large;
+            background-color: #dddddd7a;
+            border-radius: 8px;
+        }
+
+        .toggle-cart{
+            display: block;
+        }
+        
+        .cart-dropdown{
+            position:absolute; 
+            top:70px; 
+            right:140px; 
+            background-color:  #8b451394;
+            color: white; 
+            padding: 15px 20px;
+            border-radius:5px; 
+            width: 280px;
+            display: none;
+            font-size: 0.9rem;
+            border: #a15e2acb 3px solid;
+            margin-top: 15px;
+            border-radius: 8px;
+            z-index: 999;
+        }
+
+        .cart-dropdown strong {
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        .cart-dropdown ul {
+            max-height: 200px;
+            overflow-y: auto;
+            margin-bottom: 8px;
+        }
+
+        .cart-dropdown li {
+            padding: 4px 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .cart-dropdown.toggle-cart{
+            display: block;
+        }
+        .cart-dropdown.toggle-cart{
+            display: block;
+        }
+
+        .add-to-cart{
+            margin-top: 15px;
+            background-color: #ffbb0048;
+            border: none;
+            padding: 10px 15px;
+        }
+
+        .delete-item{
+            margin: 5px;
+        }
+
+
+
+
+
+        /* Contact */
+        .contact-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+        }
+
+        .contact-info {
+            background: #f9f9f9;
+            padding: 2rem;
+            border-radius: 10px;
+        }
+
+        .contact-info h3 {
+            margin-bottom: 1rem;
+            color: #8B4513;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        input, textarea {
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 1rem;
+        }
+
+        textarea {
+            height: 120px;
+            resize: vertical;
+        }
+
+        /* Footer */
+        footer {
+            background: rgb(43, 23, 9);
+            color: white;
+            text-align: center;
+            padding: 2rem 0;
+            box-shadow: rgb(43, 23, 9) 0 0 100px 120px;
+        }
+
+        /* Mobile Menu */
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        /* Responsive */
+        /* Очень большие экраны (больше 1200px) */
+        @media (min-width: 1200px) {
+            .container {
+                max-width: 1400px;
+            }
+
+            .menu-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+
+            .hero-content h1 {
+                font-size: 4rem;
+            }
+        }
+
+        /* Планшеты и средние экраны (769px - 1199px) */
+        @media (min-width: 769px) and (max-width: 1199px) {
+            .menu-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .hero-content h1 {
+                font-size: 3rem;
+            }
+
+            .cart-dropdown {
+                right: 20px;
+                width: 280px;
+            }
+        }
+
+        /* Планшеты и малые мобильные (481px - 768px) */
+        @media (max-width: 768px) {
+            .nav-container {
+                flex-direction: column;
+            }
+
+            nav ul {
+                margin-top: 1rem;
+                flex-direction: column;
+                text-align: center;
+                display: none;
+            }
+
+            nav ul li {
+                margin: 0.5rem 0;
+            }
+
+            .mobile-menu-btn {
+                display: block;
+            }
+
+            .about-content,
+            .contact-content {
+                grid-template-columns: 1fr;
+            }
+
+            .hero-content h1 {
+                font-size: 2.5rem;
+            }
+
+            .hero-content p {
+                font-size: 1rem;
+            }
+
+            .menu-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .btn {
+                padding: 10px 20px;
+                font-size: 0.95rem;
+            }
+
+            .delete-item {
+                padding: 4px 6px;
+                font-size: 0.8rem;
+            }
+
+            .cart-dropdown {
+                position: absolute;
+                top: calc(100% + 0px);
+                right: 0;
+                left: auto;
+                transform: none;
+                width: 100%;
+                max-width: none;
+                border-radius: 0;
+                z-index: 998;
+                font-size: 0.85rem;
+                padding: 12px 15px;
+                max-height: 250px;
+                overflow-y: auto;
+            }
+
+            section {
+                padding: 3rem 1rem;
+            }
+
+            h2 {
+                font-size: 2rem;
+            }
+
+            .menu-item h3 {
+                font-size: 1.5rem;
+            }
+
+            .price {
+                font-size: 1.3rem;
+            }
+
+            input, textarea {
+                font-size: 16px; /* Предотвращает зум при фокусе на iOS */
+            }
+        }
+
+        /* Очень маленькие мобильные (до 480px) */
+        @media (max-width: 480px) {
+            .nav-container {
+                padding: 0 1rem;
+            }
+
+            .logo {
+                font-size: 1.3rem;
+            }
+
+            nav ul {
+                display: none;
+                position: absolute;
+                top: 60px;
+                left: 0;
+                right: 0;
+                background: rgb(58, 31, 12);
+                padding: 1rem 0;
+                z-index: 999;
+                margin-top: 50px;
+            }
+
+            nav ul.show-nav {
+                display: flex !important;
+                flex-direction: column;
+            }
+
+
+
+            nav li {
+                margin: 0.5rem 0;
+            }
+
+
+            nav ul li {
+                margin: 0.3rem 0;
+            }
+
+            nav ul li a {
+                font-size: 0.9rem;
+            }
+
+            .hero-content h1 {
+                font-size: 1.8rem;
+            }
+
+            .hero-content p {
+                font-size: 0.9rem;
+            }
+
+            .btn {
+                padding: 8px 16px;
+                font-size: 0.85rem;
+            }
+
+            h2 {
+                font-size: 1.6rem;
+                margin-bottom: 2rem;
+            }
+
+            .menu-item {
+                padding: 1.5rem 1rem;
+            }
+
+            .menu-item h3 {
+                font-size: 1.2rem;
+            }
+
+            .price {
+                font-size: 1.1rem;
+            }
+
+            .menu-item p {
+                font-size: 0.85rem;
+            }
+
+            .cart-dropdown {
+                font-size: 0.8rem;
+                max-height: 100%;
+                border-radius: 10px;
+                max-width: 80%;
+                margin-top: 10px;
+            }
+
+            .cart-dropdown li {
+                padding: -3px 0;
+            }
+
+            .delete-item {
+                margin-left: 4px;
+                padding: 2px 4px;
+                font-size: 0.7rem;
+            }
+
+            .delete-item {
+                margin-left: 4px;
+                padding: 3px 5px;
+                font-size: 0.75rem;
+            }
+
+            section {
+                padding: 2.5rem 1rem;
+            }
+
+            .contact-info {
+                padding: 1.5rem;
+            }
+
+            input, textarea {
+                padding: 10px;
+                font-size: 16px;
+            }
+
+            textarea {
+                height: 100px;
+            }
+
+            .about-content img {
+                margin-top: 1.5rem;
+            }
+
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="nav-container">
+            <div class="logo">Cafe Delight</div>
+            <button class="mobile-menu-btn" style="inline-size: auto;">☰</button>
+            <nav>
+                <ul>
+                    <li><a href="#home">Главная</a></li>
+                    <li><a href="#about">О нас</a></li>
+                    <li><a href="#menu">Меню</a></li>
+                    <li><a href="#contact">Контакты</a></li>
+                </ul>
+            </nav>
+            <span id="busket" style="text-decoration: none; cursor: pointer;">Корзина</span>
+
+        </div>
+        <div class="cart-dropdown" id="cart-dropdown">
+            <strong>Всего: <span id="priceOfAll">0</span></strong>
+            <ul id="cart-items">               
+            </ul>
+            <a href='#contact' class="btn" id="order">Оформить заказ</a>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+        <div class="hero-content">
+            <h1>Добро пожаловать в Cafe Delight</h1>
+            <p>Лучший кофе и уютная атмосфера в городе</p>
+            <a href="#menu" class="btn">Посмотреть меню</a>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about">
+        <div class="container">
+            <h2>О нашем кафе</h2>
+            <div class="about-content">
+                <div>
+                    <p>Мы создаем уютное пространство, где каждый может насладиться прекрасным кофе, вкусной выпечкой и приятной атмосферой.</p>
+                    <p>Наши бариста проходят специальное обучение, чтобы приготовить для вас идеальный напиток.</p>
+                </div>
+                <div>
+                    <img src="https://i.ytimg.com/vi/ovM6cULhPUA/maxresdefault.jpg" alt="Интерьер кафе" style="width:100%; border-radius:10px;">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Menu Section -->
+    <section id="menu">
+        <div class="container">
+            <h2>Наше меню</h2>
+            <div class="menu-grid">
+                <div class="menu-item" id="espresso">
+                    <h3>Эспрессо</h3>
+                    <p>Классический крепкий кофе</p>
+                    <div class="price">250 ₽</div>
+                    <button class="btn add-to-cart" data-item="Эспрессо" data-price="250">Добавить в корзину</button>
+                </div>
+                <div class="menu-item" id="cuppuccino">
+                    <h3>Капучино</h3>
+                    <p>Кофе с нежной молочной пенкой</p>
+                    <div class="price">320 ₽</div>
+                    <button class="btn add-to-cart" data-item="Капучино" data-price="320">Добавить в корзину</button>
+                </div>
+                <div class="menu-item" id="latte">
+                    <h3>Латте</h3>
+                    <p>Нежный кофе с большим количеством молока</p>
+                    <div class="price">350 ₽</div>
+                    <button class="btn add-to-cart" data-item="Латте" data-price="350">Добавить в корзину</button>
+                </div>
+                <div class="menu-item" id="cruassan">
+                    <h3>Круассан</h3>
+                    <p>Свежая французская выпечка</p>
+                    <div class="price">180 ₽</div>
+                    <button class="btn add-to-cart" data-item="Круассан" data-price="180">Добавить в корзину</button>
+                </div>
+                <div class="menu-item" id="cheesecake">
+                    <h3>Чизкейк</h3>
+                    <p>Нежный десерт с ягодным соусом</p>
+                    <div class="price">420 ₽</div>
+                    <button class="btn add-to-cart" data-item="Чизкейк" data-price="420">Добавить в корзину</button>
+                </div>
+                <div class="menu-item" id="sandwich">
+                    <h3>Сэндвич с индейкой</h3>
+                    <p>Свежий сэндвич с овощами</p>
+                    <div class="price">380 ₽</div>
+                    <button class="btn add-to-cart" data-item="Сэндвич с индейкой" data-price="380">Добавить в корзину</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact">
+        <div class="container">
+            <h2>Контакты</h2>
+            <div class="contact-content">
+                <div class="contact-info">
+                    <h3>Наш адрес</h3>
+                    <p>ул. Кофейная, 123<br>Москва, Россия</p>
+                    
+                    <h3>Часы работы</h3>
+                    <p>Пн-Пт: 8:00 - 22:00<br>Сб-Вс: 9:00 - 23:00</p>
+                    
+                    <h3>Телефон</h3>
+                    <p>+7 (495) 123-45-67</p>
+                    
+                    <h3>Email</h3>
+                    <p>info@cafedelight.ru</p>
+                </div>
+                <div>
+                    <h3>Закажите доставку</h3>
+                        <p>Позвоните нам по горячей линии для доставки:</p>
+                        <p>+7 (495) 123-45-67</p>
+                        <h3>Оставить заявку</h3>
+                    <form id="contact-form"
+                         action="https://formspree.io/f/xanrynra" 
+                         method="POST">
+                        <input type="text"  name="name"  placeholder="Ваше имя" required>
+                        <input type="number"  name="phone number"    placeholder="Ваш телефон">
+                        <input type="text"  name="address"  placeholder="Ваш адрес">
+                        <textarea placeholder="Соберите корзину для заказа"  name="order" readonly id="areaUl" ></textarea>
+                        
+                        <button type="submit" class="btn" >Заказать</button>
+                    </form>
+                    <!-- modify this form HTML and place wherever you want your form -->
+                </div>
+                
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <p>&copy; 2024 Cafe Delight. Все права защищены.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile menu toggle
+        document.querySelector('.mobile-menu-btn').addEventListener('click', function() {
+            const navUl = document.querySelector('nav ul');
+            navUl.classList.toggle('show-nav');
+            document.querySelector(header).style.background = 'rgb(58, 31, 12)';
+        });
+
+        // Smooth scroll for navigation links и закрытие меню
+        document.querySelectorAll('nav a').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href');
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+                // Закрыть меню после клика
+                document.querySelector('nav ul').classList.remove('show-nav');
+            });
+        });
+
+        // Form submission
+        document.getElementById('contact-form').addEventListener('submit', function(e) {
+            alert('Спасибо! Ваша заявка будет отправлена.');
+            setTimeout(() => {
+                this.reset();
+                document.getElementById('areaUl').value = '';
+            }, 500);
+        });
+
+        // Scroll header background
+        window.addEventListener('scroll', function(){
+            const header = document.querySelector('header');
+            if (window.scrollY > 100){
+                header.style.background = 'rgb(58, 31, 12)';
+            } 
+
+            if (window.scrollY <= 100){
+                header.style.background = 'rgba(139, 69, 19, 0)';
+            }
+        });
+
+        // Basket toggle
+        document.getElementById('busket').addEventListener('click', function(e){
+            e.preventDefault();
+            document.querySelector('#cart-dropdown').classList.toggle('toggle-cart');
+        });
+
+
+
+
+
+
+        // Add to cart
+        document.querySelectorAll('.add-to-cart').forEach(el => {
+            el.addEventListener('click', function(e){
+                e.preventDefault();
+                const itemName = this.getAttribute('data-item');
+                const itemPrice = this.getAttribute('data-price');
+
+                const cartItems = document.getElementById('cart-items');
+                if (!cartItems) {
+                    console.error('Элемент #cart-items не найден');
+                    return;
+                }
+
+                // Создаём элемент списка с data-атрибутами
+                const newItem = document.createElement('li');
+                newItem.dataset.item = itemName;
+                newItem.dataset.price = itemPrice;
+
+                const textSpan = document.createElement('span');
+                textSpan.textContent = `${itemName} - ${itemPrice} ₽`;
+
+                const delBtn = document.createElement('button');
+                delBtn.className = 'delete-item';
+                delBtn.type = 'button';
+                delBtn.textContent = 'Удалить';
+                delBtn.addEventListener('click', function(e){
+                    e.preventDefault();
+                    const priceEl = document.querySelector('#priceOfAll');
+                    const price = parseInt(newItem.dataset.price) || 0;
+                    if (priceEl) {
+                        const current = parseInt(priceEl.textContent) || 0;
+                        priceEl.textContent = Math.max(0, current - price);
+                    }
+                    newItem.remove();
+                });
+
+                newItem.appendChild(textSpan);
+                newItem.appendChild(delBtn);
+                cartItems.appendChild(newItem);
+
+                // Обновить сумму
+                const priceEl = document.querySelector('#priceOfAll');
+                if (priceEl) {
+                    const current = parseInt(priceEl.textContent) || 0;
+                    priceEl.textContent = current + (parseInt(itemPrice) || 0);
+                }
+
+                // Показать корзину после добавления
+                const cartDropdown = document.getElementById('cart-dropdown');
+                if (cartDropdown) cartDropdown.classList.add('toggle-cart');
+            });
+        });
+
+
+
+
+
+        // Order button
+        document.getElementById('order').addEventListener('click', function(e){
+            e.preventDefault();
+            const cartItems = document.getElementById('cart-items');
+            const area = document.getElementById('areaUl');
+
+            if (!cartItems) {
+                console.error('Элемент #cart-items не найден');
+                return;
+            }
+
+            const items = Array.from(cartItems.querySelectorAll('li'))
+                .map(li => {
+                    const item = li.dataset.item;
+                    const price = li.dataset.price;
+                    if (item) return `${item} - ${price} ₽`;
+                    return li.textContent.trim();
+                })
+                .filter(text => text.length > 0);
+
+            // Поместить все позиции в areaUl
+            if (area) area.value = items.join('\n');
+
+            // Очистка корзины и сумма
+            cartItems.innerHTML = '';
+            const priceEl = document.querySelector('#priceOfAll');
+            if (priceEl) priceEl.textContent = '0';
+
+            // Скрыть выпадашку корзины
+            const cartDropdown = document.getElementById('cart-dropdown');
+            if (cartDropdown) cartDropdown.classList.remove('toggle-cart');
+        });
+    </script>
+</body>
+</html>
